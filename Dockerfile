@@ -1,4 +1,4 @@
-FROM python:3.8-slim-buster
+FROM python:latest
 WORKDIR /sample-python-web-app
 ADD . /sample-python-web-app
 RUN pip install -r requirements.txt

@@ -38,8 +38,7 @@ def main():
     catfact_uri = 'https://catfact.ninja/fact'
     image_caption = get_catfact(catfact_uri)
     
- 
-    
+     
     # Get basic system info
     uname = platform.uname()
 
