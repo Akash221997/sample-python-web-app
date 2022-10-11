@@ -21,5 +21,7 @@ jobs:
       run: |
          docker build -t pythonimage .
          echo " Docker image has been built"
+         docker run -d -p 90:5000 pythonimage 
+         ifconfig
 
     
