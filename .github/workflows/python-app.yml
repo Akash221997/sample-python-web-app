@@ -17,15 +17,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.10"
-    - name: Install dependencies
+    - name: Build docker image
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    - name: Run the python application
-      run: |
-        python app.py
+         docker build -t pythonimage .
+         echo " Docker image has been built"
+
     
