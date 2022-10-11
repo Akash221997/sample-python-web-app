@@ -17,11 +17,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    env:
+      DOCKER_USER: ${{ secrets.DOCKER_USER }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSSWORD }}
+    - name: login to docker hub
+      run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build docker image
       run: |
-         docker build -t pythonimage .
+         docker build -t akashacharya/pythonimage .
          echo " Docker image has been built"
-         docker run -d -p 90:5000 pythonimage 
-         ifconfig
+    - name: push the docker image to docker hub
+      run: |
+        docker push akashacharya/pythonimage
+
 
     
