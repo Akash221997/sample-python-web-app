@@ -17,11 +17,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      env:
-         DOCKER_USER: ${{ secrets.DOCKER_USER }}
-         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSSWORD }}
     - name: login to docker hub
-      run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSSWORD }}
+
+      run: |
+       docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build docker image
       run: |
         docker build . -t akashacharya/pythonimage 
