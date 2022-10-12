@@ -25,7 +25,7 @@
         "workingDirectory": null,
         "secrets": null,
         "dockerSecurityOptions": null,
-        "memory": null,
+        "memory": 500,
         "memoryReservation": null,
         "volumesFrom": [],
         "stopTimeout": null,
@@ -56,7 +56,7 @@
       "EXTERNAL",
       "EC2"
     ],
-    "taskDefinitionArn": "arn:aws:ecs:ap-south-1:055968157196:task-definition/python-app-task-definition:1",
+    "taskDefinitionArn": "arn:aws:ecs:ap-south-1:055968157196:task-definition/python-app-task-definition:5",
     "family": "python-app-task-definition",
     "requiresAttributes": [
       {
@@ -72,8 +72,8 @@
     ],
     "networkMode": null,
     "runtimePlatform": null,
-    "cpu": "2048",
-    "revision": 1,
+    "cpu": "3072",
+    "revision": 5,
     "status": "ACTIVE",
     "inferenceAccelerators": null,
     "proxyConfiguration": null,
