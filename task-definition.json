@@ -9,7 +9,7 @@
         "logDriver": "awslogs",
         "secretOptions": null,
         "options": {
-          "awslogs-group": "/ecs/python-app-task-definition",
+          "awslogs-group": "/ecs/pyhton-app-task-definition",
           "awslogs-region": "ap-south-1",
           "awslogs-stream-prefix": "ecs"
         }
@@ -64,8 +64,8 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:ap-south-1:927491280662:task-definition/python-app-task-definition:5",
-  "family": "python-app-task-definition",
+  "taskDefinitionArn": "arn:aws:ecs:ap-south-1:927491280662:task-definition/pyhton-app-task-definition:1",
+  "family": "pyhton-app-task-definition",
   "requiresAttributes": [
     {
       "targetId": null,
@@ -132,7 +132,7 @@
     "cpuArchitecture": null
   },
   "cpu": "512",
-  "revision": 5,
+  "revision": 1,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
