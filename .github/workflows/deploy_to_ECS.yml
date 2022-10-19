@@ -6,7 +6,8 @@ name: Deploy to Amazon ECS
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: 
+      - main
 
 env:
   ECR_REGISTRY: pythonregistry              # set this to your Amazon ECR repository name
