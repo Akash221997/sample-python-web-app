@@ -1,0 +1,77 @@
+name: Deploy ECR image to EKS
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  ECR_REGISTRY: pythonregistry              # set this to your Amazon ECR repository name
+  AWS_REGION: ap-south-1                    # set this to your AWS region where EC registry created
+  
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::055968157196:role/my-github-actions-role
+          role-session-name: GitHubActions
+          #aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          #aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ env.ECR_REGISTRY }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          # Build a docker container and
+          # push it to ECR so that it can
+          # be deployed to ECS.
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG  $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+
+      - uses: azure/setup-kubectl@v3
+        with:
+         version: 'v1.23.0' 
+        id: install
+    
+
+      - name: update kubeconfig
+        run: aws eks update-kubeconfig --name demo-cluster --region ap-south-1
+      
+      - name: deployment to eks
+        run: |
+        
+           kubectl cluster-info
+           kubectl apply -f deployment.yml
+           kubectl get pods
+           kubectl get svc
+
+
+
+
+
+
+
+
